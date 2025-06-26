@@ -23,13 +23,19 @@ const flashCards = {
 };
 
 // interactive varibles
-let questionCount = 1;
 const question = document.getElementById("question");
 const skip = document.getElementById("skip");
 const show = document.getElementById("show");
 const answer = document.getElementById("answer");
+const back = document.getElementById("back");
+const next = document.getElementById("next");
+const submit = document.getElementById("submit")
+const addQuestion = document.getElementById("addQuestion");
+const addAnswer = document.getElementById("addAnswer");
+
+
+let questionCount = 1;
 let currentQuestion = flashCards[questionCount];
-let lmao = document.getElementById("lmao");
 
 const loadFirstQuestion = () => {
     question.textContent = `Question: ${currentQuestion.questions}`;
@@ -44,9 +50,20 @@ const showAnswer = () => {
     }
 
 }
+const backQuestion = () => {
+    if (questionCount === 1) {
+        questionCount = Object.keys(flashCards).length;
+        currentQuestion = flashCards[questionCount];
+    } else {
+        questionCount--;
+        currentQuestion = flashCards[questionCount];
+    }
+    loadFirstQuestion();
 
-next.addEventListener("click", () => {
-    if (questionCount === 5) {
+}
+const nextQuestion = () => {
+    console.log("hey does this work")
+    if (questionCount === Object.keys(flashCards).length) {
         questionCount = 1;
         currentQuestion = flashCards[questionCount];
     } else {
@@ -54,9 +71,23 @@ next.addEventListener("click", () => {
         currentQuestion = flashCards[questionCount];
     }
     loadFirstQuestion();
-    console.log("hey does this work");
-    console.log(currentQuestion);
 
+
+}
+
+next.addEventListener("click", nextQuestion);
+back.addEventListener("click", backQuestion);
+show.addEventListener("click", showAnswer);
+
+submit.addEventListener("click", (e) => {
+    e.preventDefault();
+    const questionValue = addQuestion.value;
+    const answerValue = addAnswer.value
+    const lengthOfFlashCardSet = Object.keys(flashCards).length + 1
+    flashCards[lengthOfFlashCardSet] = {
+        "questions": questionValue,
+        "answer": answerValue
+    }
+    console.log(flashCards);
 })
-show.addEventListener("click", showAnswer)
 loadFirstQuestion();
