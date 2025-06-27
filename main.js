@@ -22,6 +22,8 @@ const flashCards = {
     },
 };
 
+const subjects = {};
+
 // interactive varibles
 const question = document.getElementById("question");
 const skip = document.getElementById("skip");
@@ -32,6 +34,8 @@ const next = document.getElementById("next");
 const submit = document.getElementById("submit")
 const addQuestion = document.getElementById("addQuestion");
 const addAnswer = document.getElementById("addAnswer");
+const addDeck = document.getElementById("addDeck");
+const addSubject = document.getElementById("addSubject");
 
 
 let questionCount = 1;
@@ -74,13 +78,7 @@ const nextQuestion = () => {
 
 
 }
-
-next.addEventListener("click", nextQuestion);
-back.addEventListener("click", backQuestion);
-show.addEventListener("click", showAnswer);
-
-submit.addEventListener("click", (e) => {
-    e.preventDefault();
+const submitFlashcard = () => {
     const questionValue = addQuestion.value;
     const answerValue = addAnswer.value
     const lengthOfFlashCardSet = Object.keys(flashCards).length + 1
@@ -88,6 +86,18 @@ submit.addEventListener("click", (e) => {
         "questions": questionValue,
         "answer": answerValue
     }
-    console.log(flashCards);
+    addAnswer.value = " ";
+    addQuestion.value = " ";
+}
+
+next.addEventListener("click", nextQuestion);
+back.addEventListener("click", backQuestion);
+show.addEventListener("click", showAnswer);
+submit.addEventListener("click", submitFlashcard);
+addDeck.addEventListener("click", () => {
+
+    console.log(addSubject.value);
+    subjects[addSubject.value] = {};
+    addSubject.value = " ";
 })
 loadFirstQuestion();
