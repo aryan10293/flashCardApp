@@ -36,6 +36,10 @@ const addQuestion = document.getElementById("addQuestion");
 const addAnswer = document.getElementById("addAnswer");
 const addDeck = document.getElementById("addDeck");
 const addSubject = document.getElementById("addSubject");
+const select = document.getElementById("subjectSelect");
+const displaySubject = document.getElementById("displaySubject");
+const enter = document.getElementById("displaySubject");
+const deck = document.getElementById("deck");
 
 
 let questionCount = 1;
@@ -63,10 +67,10 @@ const backQuestion = () => {
         currentQuestion = flashCards[questionCount];
     }
     loadFirstQuestion();
+    showAnswer();
 
 }
 const nextQuestion = () => {
-    console.log("hey does this work")
     if (questionCount === Object.keys(flashCards).length) {
         questionCount = 1;
         currentQuestion = flashCards[questionCount];
@@ -75,7 +79,7 @@ const nextQuestion = () => {
         currentQuestion = flashCards[questionCount];
     }
     loadFirstQuestion();
-
+    showAnswer();
 
 }
 const submitFlashcard = () => {
@@ -90,14 +94,23 @@ const submitFlashcard = () => {
     addQuestion.value = " ";
 }
 
+const addAndDisplaySubject = () => {
+    const option = document.createElement("option");
+    subjects[addSubject.value] = {};
+    option.innerHTML = addSubject.value;
+    addSubject.value = " ";
+    select.append(option);
+    console.log(subjects)
+}
+
+
 next.addEventListener("click", nextQuestion);
 back.addEventListener("click", backQuestion);
 show.addEventListener("click", showAnswer);
 submit.addEventListener("click", submitFlashcard);
-addDeck.addEventListener("click", () => {
-
-    console.log(addSubject.value);
-    subjects[addSubject.value] = {};
-    addSubject.value = " ";
+addDeck.addEventListener("click", addAndDisplaySubject)
+enter.addEventListener("click", (e) => {
+    deck.innerHTML = deck.textContent + " to " + select.value + " deck";
+    console.log(select.value);
 })
 loadFirstQuestion();
